@@ -8,10 +8,30 @@ const getUser = async (username) => {
                const data = await res.json();
                return data;
           }
+          else
+          {
+                    dispalyError(res.status);
+
+          }
      } catch (error) {
           console.log(error);
      }
 };
+
+const dispalyError=(status)=>{
+     const msg=document.querySelector('#message');
+     var errormsg="";
+     if(status ===404)
+     {
+          errormsg=`<div class="alert alert-danger text-center">User not found</div>`;
+     }
+     else
+     {
+          errormsg=`<div class="alert alert-danger text-center">Something went wrong</div>`;   
+     }
+     msg.innerHTML=errormsg;
+     setTimeout(()=>{msg.innerHTML=``},5000);
+}
 
 const doc = document.addEventListener("DOMContentLoaded", () => {
      const searchForm = document.querySelector("#searchForm");
