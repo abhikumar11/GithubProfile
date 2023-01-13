@@ -50,6 +50,19 @@ const loadData = (data) => {
  };
  document.querySelector('#profile').innerHTML =userdata;
 };
+const loadRepo=async(user)=>{
+     const res = await fetch(`https://api.github.com/users/${user}/repos`);
+     try {
+          if (res.status == 200) {
+               const data = await res.json();
+               return data;
+          } else {
+               dispalyError(res.status);
+          }
+     } catch (error) {
+          console.log(error);
+     }
+}
 const dispalyError = (status) => {
      const msg = document.querySelector("#message");
      var errormsg = "";
@@ -73,11 +86,12 @@ const doc = document.addEventListener("DOMContentLoaded", () => {
           if (username.length > 0) {
                const user = await getUser(username);
                if (user.login) {
-                    loadData(user);
+                    const repo=loadRepo(username);
+                    /*loadData(user);
                     document.querySelector(".searchblock").style.display =
                          "none";
-                    document.querySelector(".profile").style.display = "block";
-                    console.log(user);
+                    document.querySelector(".profile").style.display = "block";*/
+                    console.log(repo);
                }
           }
      });
